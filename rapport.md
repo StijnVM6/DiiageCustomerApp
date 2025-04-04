@@ -96,3 +96,42 @@ private static List<StudentClass> CreateClassesAndFees(int nbStudentPerClass, Li
 
 These functions generate mockData which is of no security-sensitive importance.
 No action needed.
+
+# Make sure using a dynamically formatted SQL query is safe here.
+
+## Identification:
+
+Vulnérabilité : Injection SQL
+Formatting SQL queries is security-sensitive
+Niveau de gravité : Élevé
+
+## Description:
+
+Localisation:
+
+> Caltec.StudentInfoProject.Business/StudentService.cs
+> ligne 73
+
+```
+var query = $"INSERT INTO Students (FirstName, LastName) VALUES ('{StudentToInsert.FirstName}', '{StudentToInsert.LastName}')";
+StudentInfoDbContext.Database.ExecuteSqlRaw(query);
+```
+
+## Impact:
+
+L’utilisation de requêtes SQL dynamiques sans protection adéquate peut permettre l’injection SQL, compromettant ainsi la base de données et exposant des données sensibles.
+
+-   Compromission des données utilisateurs.
+-   Exécution de requêtes malveillant par un attaquant.
+-   Perte potentielle de données.
+
+## Recommendation:
+
+Utiliser des requêtes paramétrées et lier des variables aux paramètre de requête SQL.
+
+```
+public void Foo(DbContext context, string query, string param)
+{
+    context.Database.ExecuteSqlCommand("SELECT * FROM mytable WHERE mycol=@p0", param); // Compliant, it's a parametrized safe query
+}
+```
