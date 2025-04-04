@@ -2,7 +2,7 @@
 
 Titre : "Rapport d'audit de sécurité - DiiageCustomerApp"
 
-MERMER Enis Stijn VANDE MAELE LEROUX Véronique
+MERMER Enis _ VANDE MAELE Stijn _ LEROUX Véronique
 
 # Make sure this database password gets changed and removed from the code.
 
